@@ -1,9 +1,9 @@
 
 Create from URL
-`WITH "https://raw.githubusercontent.com/supervanya/flavoenzymes/master/export/kegg.json" AS url`
+```WITH "https://raw.githubusercontent.com/supervanya/flavoenzymes/master/export/kegg.json" AS url```
 
 Create from local file
-`WITH "kegg.json" AS url`
+```WITH "kegg.json" AS url```
 
 
 Create from JSON
