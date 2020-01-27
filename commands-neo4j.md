@@ -1,12 +1,12 @@
 
-// Create from URL
+Create from URL
 `WITH "https://raw.githubusercontent.com/supervanya/flavoenzymes/master/export/kegg.json" AS url`
 
-// Create from local file
+Create from local file
 `WITH "kegg.json" AS url`
 
 
-// Create from JSON
+Create from JSON
 ```
 WITH "kegg.json" AS url
 CALL apoc.load.json(url) YIELD value AS enzymes
@@ -24,17 +24,17 @@ UNWIND keys(enzymes)[0..10] AS ec
     )
 ```
 
-// Show them all    
+Show them all    
 `MATCH (n) return n`
 
-// Partial return
+Partial return
 ```
 MATCH (n:Enzyme) 
 RETURN (n)-[:binds]->()
 LIMIT 25
 ```
 
-// Specific enzyme
+Specific enzyme
 ```
 MATCH p=(e:Enzyme)-->()<--()
 WHERE e.name="ec:1.2.99.7" 
