@@ -8,7 +8,7 @@ CACHING = True
 
 
 # <----- CACHING TO FILE ----->
-CACHE_FNAME = 'cache.json'
+CACHE_FNAME = 'export/cache.json'
 
 def cache_init():
     try:
@@ -31,6 +31,9 @@ def cache_init():
 
 
 def params_unique_combination(baseurl, params):
+    if not params:
+        return baseurl
+    
     alphabetized_keys = sorted(params.keys())
     res = []
     for k in alphabetized_keys:
@@ -42,7 +45,7 @@ def params_unique_combination(baseurl, params):
 # url+params combo. However, it will first look to see if we have already
 # cached the result and, if so, return the result from cache.
 # If we haven't cached the result, it will get a new one (and cache it)
-def cached_reqest(baseurl, params, auth=None):
+def cached_reqest(baseurl, params=None, auth=None):
     unique_ident = params_unique_combination(baseurl, params)
 #     print(unique_ident)
 #     print(CACHE_DICTION)
@@ -66,7 +69,7 @@ def cached_reqest(baseurl, params, auth=None):
         if DEBUG == True:
             print("Making a request for new data...")
             print(resp.url)
-        CACHE_DICTION[unique_ident] = json.loads(resp.text)
+        CACHE_DICTION[unique_ident] = resp.text
         dumped_json_cache = json.dumps(CACHE_DICTION)
         fw = open(CACHE_FNAME, "w")
         fw.write(dumped_json_cache)
