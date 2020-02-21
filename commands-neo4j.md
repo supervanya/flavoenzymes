@@ -18,15 +18,15 @@ if creating from a local file replace link with file name and place file within 
 ```
 WITH "https://raw.githubusercontent.com/supervanya/flavoenzymes/master/export/kegg.json" AS url
 CALL apoc.load.json(url) YIELD value AS enzymes
-UNWIND keys(enzymes) AS ec
-	MERGE (e:Enzyme {name: ec})
+UNWIND keys(enzymes) AS enzName
+	MERGE (e:Enzyme {name: enzName})
     
-    FOREACH (subsName in enzymes[ec].SUBSTRATE | 
+    FOREACH (subsName in enzymes[enzName].SUBSTRATE | 
     	MERGE (s:Substrate {name: subsName})
         MERGE (s)<-[:binds]-(e)
     )
     
-    FOREACH (prodName in enzymes[ec].PRODUCT |
+    FOREACH (prodName in enzymes[enzName].PRODUCT |
     	MERGE (p:Product {name: prodName})
         MERGE (p)<-[:releases]-(e)
     )
