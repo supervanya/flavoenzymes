@@ -3,6 +3,8 @@
 ### Getting Started
 1. To run the project create a virtual environment with Python 3.6
     - `virtualenv ENV`
+1. Activate the environment
+    - `source ENV/bin/activate`
 1. Install dependancies
     - `pip install -r requirements.txt`
 
