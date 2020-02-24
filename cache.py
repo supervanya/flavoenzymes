@@ -1,6 +1,7 @@
 # caching impolementation for the API requests
 import requests
 import json
+import zeep
 
 # trurn this off to remove debugginf print statements
 DEBUG = True
@@ -9,7 +10,6 @@ CACHING = True
 
 # <----- CACHING TO FILE ----->
 CACHE_FNAME = 'export/cache.json'
-CACHE_DICTION = cache_init()
 
 def cache_init():
     try:
@@ -29,6 +29,9 @@ def cache_init():
     # A helper function that accepts 2 parameters
     # and returns a string that uniquely represents the request
     # that could be made with this info (url + params)
+
+CACHE_DICTION = cache_init()
+
 
 
 def params_unique_combination(baseurl, params):
@@ -92,20 +95,20 @@ def generic_cached_reqest(request_name, params, request_fn):
             print("Making a request for new data...")
             print(f'{request_name}, params: {json.dumps(params)}') 
     resp = request_fn(*params)
-    resp_list = resp
+    resp_serialized = zeep.helpers.serialize_object(resp)
     
     # add it to the cache
-    CACHE_DICTION[unique_ident] = resp_list
+    CACHE_DICTION[unique_ident] = resp_serialized
     
     # TODO: currently can not serialize zeep types
     # need to pickle it
     # write the cache file
-    # dumped_json_cache = json.dumps(CACHE_DICTION)
-    # fw = open(CACHE_FNAME, "w")
-    # fw.write(dumped_json_cache)
+    dumped_json_cache = json.dumps(CACHE_DICTION)
+    fw = open(CACHE_FNAME, "w")
+    fw.write(dumped_json_cache)
     
     # Close the open file
-    #     fw.close()
+    fw.close()
     
     return CACHE_DICTION[unique_ident]
 
