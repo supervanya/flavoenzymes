@@ -102,7 +102,7 @@ def generic_cached_reqest(request_name, params, request_fn):
     
     # TODO: currently can not serialize zeep types
     # need to pickle it
-    # write the cache file
+    # UPDATE: found a way using `zeep.helpers.serialize_object`
     dumped_json_cache = json.dumps(CACHE_DICTION)
     fw = open(CACHE_FNAME, "w")
     fw.write(dumped_json_cache)
