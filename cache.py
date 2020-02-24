@@ -9,6 +9,7 @@ CACHING = True
 
 # <----- CACHING TO FILE ----->
 CACHE_FNAME = 'export/cache.json'
+CACHE_DICTION = cache_init()
 
 def cache_init():
     try:
@@ -45,7 +46,7 @@ def params_unique_combination(baseurl, params):
 # url+params combo. However, it will first look to see if we have already
 # cached the result and, if so, return the result from cache.
 # If we haven't cached the result, it will get a new one (and cache it)
-def cached_reqest(baseurl, params=None, auth=None):
+def cached_reqest(baseurl, params=None, auth=None, headers=None):
     unique_ident = params_unique_combination(baseurl, params)
 #     print(unique_ident)
 #     print(CACHE_DICTION)
@@ -62,9 +63,9 @@ def cached_reqest(baseurl, params=None, auth=None):
     else:
         # Make the request and cache the new data
         if auth == None:
-            resp = requests.get(baseurl, params)
+            resp = requests.get(baseurl, params, headers=headers)
         else:
-            resp = requests.get(baseurl, params=params, auth=auth)
+            resp = requests.get(baseurl, params=params, auth=auth, headers=headers)
 
         if DEBUG == True:
             print("Making a request for new data...")
@@ -76,5 +77,36 @@ def cached_reqest(baseurl, params=None, auth=None):
         fw.close()  # Close the open file
         return CACHE_DICTION[unique_ident]
 
+def generic_cached_reqest(request_name, params, request_fn):
+    unique_ident = params_unique_combination(baseurl=request_name, params={ p:p for p in params })
+    
+    # first, look in the cache to see if we already have this data
+    if unique_ident in CACHE_DICTION and CACHING:
+        if DEBUG == True:
+            print("Getting cached data...")
+            print(unique_ident)
+        return CACHE_DICTION[unique_ident]
+    
+    # if not, fetch it
+    if DEBUG == True:
+            print("Making a request for new data...")
+            print(f'{request_name}, params: {json.dumps(params)}') 
+    resp = request_fn(*params)
+    resp_list = resp
+    
+    # add it to the cache
+    CACHE_DICTION[unique_ident] = resp_list
+    
+    # TODO: currently can not serialize zeep types
+    # need to pickle it
+    # write the cache file
+    # dumped_json_cache = json.dumps(CACHE_DICTION)
+    # fw = open(CACHE_FNAME, "w")
+    # fw.write(dumped_json_cache)
+    
+    # Close the open file
+    #     fw.close()
+    
+    return CACHE_DICTION[unique_ident]
 
-CACHE_DICTION = cache_init()
+
