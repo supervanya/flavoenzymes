@@ -76,10 +76,12 @@ def cached_reqest(baseurl, params=None, auth=None, headers=None, useCaching=CACH
         fw.close()  # Close the open file
         return CACHE_DICTION[unique_ident]
 
-def generic_cached_reqest(request_name, params, request_fn, useCaching=CACHING):
-    unique_ident = params_unique_combination(baseurl=request_name, params={ p:p for p in params })
+def brenda_cached_reqest(request_name, params, request_fn, useCaching=CACHING):
+    unique_ident = params_unique_combination(baseurl=request_name, params={ p:p for p in params[2:] })
     
     # first, look in the cache to see if we already have this data
+    print('useCaching',useCaching)
+    print('unique_ident in CACHE_DICTION',unique_ident in CACHE_DICTION)
     if unique_ident in CACHE_DICTION and useCaching:
         if DEBUG == True:
             print("Getting cached data...")
@@ -100,9 +102,9 @@ def generic_cached_reqest(request_name, params, request_fn, useCaching=CACHING):
     else:
         print(f'Error: not sure how to hande parameters of type: {type(params)}')
         
-    print(resp)
     resp_serialized = zeep.helpers.serialize_object(resp)
     
+    print('unique_ident',unique_ident)
     # add it to the cache
     CACHE_DICTION[unique_ident] = resp_serialized
     
