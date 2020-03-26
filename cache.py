@@ -30,8 +30,6 @@ def cache_init():
     # and returns a string that uniquely represents the request
     # that could be made with this info (url + params)
 
-CACHE_DICTION = cache_init()
-
 
 
 def params_unique_combination(baseurl, params):
@@ -49,13 +47,11 @@ def params_unique_combination(baseurl, params):
 # url+params combo. However, it will first look to see if we have already
 # cached the result and, if so, return the result from cache.
 # If we haven't cached the result, it will get a new one (and cache it)
-def cached_reqest(baseurl, params=None, auth=None, headers=None):
+def cached_reqest(baseurl, params=None, auth=None, headers=None, useCaching=CACHING):
     unique_ident = params_unique_combination(baseurl, params)
-#     print(unique_ident)
-#     print(CACHE_DICTION)
 
     # first, look in the cache to see if we already have this data
-    if unique_ident in CACHE_DICTION and CACHING:
+    if unique_ident in CACHE_DICTION and useCaching:
         if DEBUG == True:
             print("Getting cached data...")
             print(unique_ident)
@@ -80,11 +76,11 @@ def cached_reqest(baseurl, params=None, auth=None, headers=None):
         fw.close()  # Close the open file
         return CACHE_DICTION[unique_ident]
 
-def generic_cached_reqest(request_name, params, request_fn):
-    unique_ident = params_unique_combination(baseurl=request_name, params={ p:p for p in params })
+def brenda_cached_reqest(request_name, params, request_fn, useCaching=CACHING):
+    unique_ident = params_unique_combination(baseurl=request_name, params={ p:p for p in params[2:] })
     
     # first, look in the cache to see if we already have this data
-    if unique_ident in CACHE_DICTION and CACHING:
+    if unique_ident in CACHE_DICTION and useCaching:
         if DEBUG == True:
             print("Getting cached data...")
             print(unique_ident)
@@ -92,9 +88,18 @@ def generic_cached_reqest(request_name, params, request_fn):
     
     # if not, fetch it
     if DEBUG == True:
-            print("Making a request for new data...")
-            print(f'{request_name}, params: {json.dumps(params)}') 
-    resp = request_fn(*params)
+        print("Making a request for new data...")
+        print(f'{request_name}, params: {json.dumps(params)}')
+        
+    if (type(params) == str):
+        resp = request_fn(params)
+    elif (type(params) == dict):
+        resp = request_fn(**params)
+    elif (type(params) == tuple):
+        resp = request_fn(*params)
+    else:
+        print(f'Error: not sure how to hande parameters of type: {type(params)}')
+        
     resp_serialized = zeep.helpers.serialize_object(resp)
     
     # add it to the cache
@@ -113,3 +118,36 @@ def generic_cached_reqest(request_name, params, request_fn):
     return CACHE_DICTION[unique_ident]
 
 
+def kegg_cached_reqest(request_name, ec, request_fn, useCaching=CACHING):
+    unique_ident = params_unique_combination(baseurl=request_name, params={'ec':ec})
+    
+    # first, look in the cache to see if we already have this data
+    if unique_ident in CACHE_DICTION and useCaching:
+        if DEBUG == True:
+            print("Getting cached data...")
+            print(unique_ident)
+        return CACHE_DICTION[unique_ident]
+    
+    # if not, fetch it
+    if DEBUG == True:
+            print("Making a request for new data...")
+            print(f'{request_name}, ec: {ec}')
+            
+    resp = request_fn(ec)
+    
+    # add it to the cache
+    CACHE_DICTION[unique_ident] = resp
+    
+    # TODO: currently can not serialize zeep types
+    # need to pickle it
+    # UPDATE: found a way using `zeep.helpers.serialize_object`
+    dumped_json_cache = json.dumps(CACHE_DICTION)
+    fw = open(CACHE_FNAME, "w")
+    fw.write(dumped_json_cache)
+    
+    # Close the open file
+    fw.close()
+    
+    return CACHE_DICTION[unique_ident]
+
+CACHE_DICTION = cache_init()

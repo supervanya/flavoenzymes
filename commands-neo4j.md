@@ -46,9 +46,22 @@ RETURN (n)-[:binds]->()
 LIMIT 25
 ```
 
+#### 25 enzymes with anything they bind and release 
+```
+MATCH (n)
+RETURN ()<-[:releases]-(n)-[:binds]->() 
+LIMIT 25
+```
+
 #### Specific enzyme with all links
 ```
 MATCH p=(e:Enzyme)-->()
-WHERE e.name="ec:1.2.99.7" 
+WHERE e.ec="ec:1.2.99.7" 
 RETURN p
+```
+
+```
+MATCH (e:Enzyme)
+MATCH path = (e)-[]->(s:Substrate)
+RETURN path;
 ```
