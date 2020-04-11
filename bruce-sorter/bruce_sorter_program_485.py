@@ -25,16 +25,17 @@ Ask Q2 (function):
 class NotFlavoEnzymeError(ValueError):
     pass
 
+def NUMBER_ENZYMES_LEFT():
+    return len(DF[DF.bin == '0'])
+
 FILE_NAME = 'flavoenzymes_to_sort.csv'
 DF = pd.read_csv(FILE_NAME)
 DF['bin'] = DF['bin'].astype(str)
-NUMBER_ENZYMES_LEFT = len(DF[DF.bin == '0'])
 TERMINAL_WIDTH = 130
 
 
-
 # question specific parameters 
-L = f"{Fore.YELLOW}{NUMBER_ENZYMES_LEFT}{Fore.GREEN}"
+L = f"{Fore.YELLOW}{NUMBER_ENZYMES_LEFT()}{Fore.GREEN}"
 WELCOME_MESSAGE = f'''{Fore.GREEN}
                      ┌────────────────────────────────┐                 
 ┌────────────────────│         Bruce Sorter           │───────────────────────┐
@@ -205,10 +206,11 @@ def printCommands():
     print(f"Type {Fore.GREEN}'naf'{Fore.RESET} to mark as non-flavin")
 
 def quit():
-    if NUMBER_ENZYMES_LEFT == 0:
+    left = NUMBER_ENZYMES_LEFT()
+    if left == 0:
         print('You are done! no more remaining enzymes')
     else:
-        printMessage(f'{NUMBER_ENZYMES_LEFT} enzymes left to sort, have a good day!')
+        printMessage(f'{left} enzymes left to sort, have a good day!')
     exit()
 
 
