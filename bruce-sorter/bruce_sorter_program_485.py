@@ -1,4 +1,5 @@
 import pandas as pd
+from colorama import Fore, Back, Style, init, deinit
 import json
 
 """
@@ -30,17 +31,42 @@ DF['bin'] = DF['bin'].astype(str)
 NUMBER_ENZYMES_LEFT = len(DF[DF.bin == '0'])
 TERMINAL_WIDTH = 130
 
+
+
 # question specific parameters 
+L = f"{Fore.YELLOW}{NUMBER_ENZYMES_LEFT}{Fore.GREEN}"
+WELCOME_MESSAGE = f'''{Fore.GREEN}
+                     ┌────────────────────────────────┐                 
+┌────────────────────│         Bruce Sorter           │───────────────────────┐
+│                    └────────────────────────────────┘                       │
+│                                                                             │
+│                      Bruce, ready to sort some enzymes?                     │
+│                                                                             │
+│               It looks like there are [{L}] enzymes left                    │
+│                                                                             │
+│     If you choose 'other', you will be prompted for an 'comment'            │
+│     If you choose 'naf', the whole entry will be skipped and marked 'naf'   │ 
+│     If you choose 'idk', just that question will be marked as 'idk'         │     
+│     If a wrong input encountered, the question will repeat                  │     
+│     If you choose 'exit', the program will save and quit                    │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘'''
 other_answers = ['naf', 'idk', 'other']
 
 Ox_answers_col_name = 'OxidativeHalf'
 Ox_answers  = ['htrans', 'disulfide', 'etrans', 'oxidase', 'mono', 'newmono', 'h', 'd', 'e', 'o', 'm', 'n'] + other_answers
-Ox_answers_prompt = "==> OxidativeHalf\nEnter one of: htrans(h), disulfide(d), etrans(e), oxidase(o), mono(m), newmono(n), not-a-flavin(naf), other or idk\nFor example, you can enter 'newmono' or just 'n'"
+Ox_answers_prompt = "\n==> Oxidative Half Reactions\nEnter: htrans(h), disulfide(d), etrans(e), oxidase(o), mono(m), newmono(n), other or idk\nFor example, you can enter 'newmono' or just 'n'"
+Ox_answers_prompt = f'''
+==> {Style.BRIGHT}Oxidative Half Reactions{Style.RESET_ALL}
+Options: {Fore.GREEN}htrans(h)   disulfide(d)   etrans(e)   oxidase(o)   mono(m)   newmono(n)   other   idk'''
+
 
 Red_answers_col_name = 'ReductionHalf'
 Red_answers = ['etrans', 'thiol', 'htrans', 'e', 't', 'h'] + other_answers
-Red_answers_prompt = "==> ReductionHalf\nEnter one of: etrans(e), thiol(t), htrans(h), not-a-flavin(naf), other or idk.\nFor example, you can enter 'etrans' or just 'e'"
-
+Red_answers_prompt = "==> Reduction Half Reaction? (etrans(e), thiol(t), htrans(h), other, or idk)\nFor example, you can enter 'etrans' or just 'e'"
+Red_answers_prompt = f'''
+==> {Style.BRIGHT}Reduction Half Reactions{Style.RESET_ALL}
+Options: {Fore.GREEN}etrans(e)   disulfide(d)   htrans(h)  oxidase(o)   other   idk'''
 
 # mappings
 answer_map = {
@@ -84,6 +110,9 @@ bin_answer_map = {
     'HTrans, NewMonoox': 'r'
 }
 
+def printGreeting():
+    print(WELCOME_MESSAGE)
+
 def getUnsortedEnzymesIndex():
     return DF[DF.bin == '0'].index
 
@@ -99,19 +128,13 @@ def writeNAF(index):
     printMessage("Reported as a naf(Not a Flavoenzyme)")
     writeToDF('naf',index,'bin')
 
-def printGreeting():
-    print("*"*TERMINAL_WIDTH)
-    printMessage("Hi Bruce, ready to sort some enzymes?",'*')
-    print("*"*TERMINAL_WIDTH)
 
-    printMessage(f'It looks like there are {NUMBER_ENZYMES_LEFT} enzymes left')
-    print('\n')
 
 def printMessage(message, sep=False):
     if sep:
         print(f" {message} ".center(TERMINAL_WIDTH, sep))
     else:
-        print(f"> {message} <".center(TERMINAL_WIDTH, ' '))
+        print(f"✅ {message} ✅".center(TERMINAL_WIDTH, ' '))
 
 def printEnd():
     print('\n'*30)
@@ -121,12 +144,14 @@ def askPrompt(index,prompt):
     prompts the user for answer
     returns the answer
     '''    
-    return input(prompt + "\n > ").lower()
+    print("\n" + prompt)
+    printCommands()
+    return input("> ").lower()
 
 def handleInvalidInput(answer,index,possible_answers,prompt,column):
-    print(f'⚠️ You have entered "{answer}". That is not a valid input. Try again?')
-    input("PRESS ENTER/RETURN TO CONTINUE...")
-    handleQuestion(index,possible_answers,prompt,column)
+    print(f'❌ You have entered "\033[31m{answer}\033[39m". That is not a valid input. Try again?')
+    answer = input("> ")
+    handleQuestion(index,possible_answers,prompt,column, answer)
 
 def handleBinning(index):
     ox = DF.at[index, Ox_answers_col_name]
@@ -153,38 +178,53 @@ def printCompoundInfo(compoundJsonString):
     else:
         [print(f" • {s}") for s in compound_list]
 
+def leftToSort():
+    return len(DF[DF.bin == '0'])
+
 def printEnzymeInfo(index):
-    print(f'Row #: {index + 1}')
+    print(f'Row:          {index + 1}')
+    print(f'Total:        {len(DF)}')
+    print(f"Left to sort: {leftToSort()}")
     name = DF.at[index,'SYSNAME']
     substrates = (DF.at[index,'SUBSTRATE'])
     products = (DF.at[index,'PRODUCT'])
     ec = DF.at[index,'ec']
 
     print("This is the enzyme:")
-    print(f"Name: {name}")
-    print(f'Kegg link: https://www.genome.jp/dbget-bin/www_bget?ec:{ec}')
-    print(f'Brenda link: https://www.brenda-enzymes.info/enzyme.php?ecno={ec}')
+    print("*******************")
+    print(f"Name: {Fore.YELLOW}{name}")
+    print(f'Kegg link: {Fore.LIGHTCYAN_EX}https://www.genome.jp/dbget-bin/www_bget?ec:{ec}')
+    print(f'Brenda link: {Fore.LIGHTCYAN_EX}https://www.brenda-enzymes.info/enzyme.php?ecno={ec}')
     
-    print(f"Substrates:")
+    print(f"{Style.BRIGHT}Substrates:")
     printCompoundInfo(substrates)
-    print(f"Products:")
+    print(f"{Style.BRIGHT}Products:")
     printCompoundInfo(products)
+
+def printCommands():
+    print(f"Type {Fore.GREEN}'exit'{Fore.RESET} to exit")
+    print(f"Type {Fore.GREEN}'naf'{Fore.RESET} to mark as non-flavin")
 
 def quit():
     if NUMBER_ENZYMES_LEFT == 0:
         print('You are done! no more remaining enzymes')
     else:
-        print(f'{NUMBER_ENZYMES_LEFT} enzymes left to sort, have a good day!')
+        printMessage(f'{NUMBER_ENZYMES_LEFT} enzymes left to sort, have a good day!')
     exit()
 
 
-def handleQuestion(index,possible_answers,prompt,column):
-    answer = askPrompt(index, prompt)
+def handleQuestion(index,possible_answers,prompt,column,answer=False):
+    if not answer:
+        answer = askPrompt(index, prompt)
     if (answer == 'exit'):
         quit()
     elif (answer == 'naf'):
         raise NotFlavoEnzymeError('Not a flavin')
-    elif (answer in possible_answers) or (answer in ['other','idk']):
+    elif (answer == 'other'):
+        otherDescr = input("Briefly describe or type 'no' and hit ENTER\n comment > ")
+        writeToDF(answer,index,column)
+        writeToDF(otherDescr,index,column+'_comment')
+    elif (answer in possible_answers):
         answer = answer_map[answer]
         writeToDF(answer,index,column)
     else:
@@ -219,4 +259,6 @@ def main():
         quit() # this will say there is no remaining enzymes
 
 if __name__ == "__main__":
+    init(autoreset=True)
     main()
+    deinit()
