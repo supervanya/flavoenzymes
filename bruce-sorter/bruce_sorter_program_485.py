@@ -58,15 +58,14 @@ Ox_answers  = ['htrans', 'disulfide', 'etrans', 'oxidase', 'mono', 'newmono', 'h
 Ox_answers_prompt = "\n==> Oxidative Half Reactions\nEnter: htrans(h), disulfide(d), etrans(e), oxidase(o), mono(m), newmono(n), other or idk\nFor example, you can enter 'newmono' or just 'n'"
 Ox_answers_prompt = f'''
 ==> {Style.BRIGHT}Oxidative Half Reactions{Style.RESET_ALL}
-Options: {Fore.GREEN}htrans(h)   disulfide(d)   etrans(e)   oxidase(o)   mono(m)   newmono(n)   other   idk'''
-
+Options: {Fore.GREEN}etrans(e)   disulfide(d)   htrans(h)   oxidase(o)   mono(m)   newmono(n)   other   idk'''
 
 Red_answers_col_name = 'ReductionHalf'
 Red_answers = ['etrans', 'thiol', 'htrans', 'e', 't', 'h'] + other_answers
 Red_answers_prompt = "==> Reduction Half Reaction? (etrans(e), thiol(t), htrans(h), other, or idk)\nFor example, you can enter 'etrans' or just 'e'"
 Red_answers_prompt = f'''
 ==> {Style.BRIGHT}Reduction Half Reactions{Style.RESET_ALL}
-Options: {Fore.GREEN}etrans(e)   disulfide(d)   htrans(h)  oxidase(o)   other   idk'''
+Options: {Fore.GREEN}etrans(e)   thiol(t)   htrans(h)  other   idk'''
 
 # mappings
 answer_map = {
