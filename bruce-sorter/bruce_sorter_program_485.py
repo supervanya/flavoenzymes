@@ -1,4 +1,5 @@
 
+""" 
 import json
 import pandas as pd
 import numpy as np
@@ -11,7 +12,6 @@ df['bin'] = df['bin'].astype(str)
 df['ReductionHalf'] = df['ReductionHalf'].astype(str)
 df['OxidativeHalf'] = df['OxidativeHalf'].astype(str)
 
-
 for entry in df.index:
     if(df.loc[entry,'bin'] == '0'):
         istring = str(entry)
@@ -21,9 +21,7 @@ for entry in df.index:
         binlist = df['bin'].tolist()
         left = str(binlist.count('0'))
 
-
 for entry in df.index:
-
     if(df.loc[entry,'bin'] == '0'):
         istring = str(entry)
         print("Index Number: "+ istring)
@@ -540,13 +538,9 @@ print("*********   End of Program   *********")
 #print(df.head())
 #print(df.loc[df['bin']=='c'])
 df.to_csv(InFile,index=False)
+ """
 
 
-
-
-Red_answers = ['etrans', 'thiol', 'htrans']
-Ox_answers  = ['htrans', 'disulfide', 'etrans', 'oxidase', 'mono', 'newmono']
-emily_map = {'a':'eTrans, HTrans','b':'eTrans, DisulfideRed','c':'eTrans, eTrans','d':'eTrans, Oxidase','e':'eTrans, Monoox','f':'eTrans, NewMonoox','g':'ThiolOx, HTrans','h':'ThiolOx, DisulfideRed','i':'ThiolOx, eTrans','j':'ThiolOx, Oxidase','k':'ThiolOx, Monoox','l':'ThiolOx, NewMonoox','m':'HTrans, HTrans','n':'HTrans, DisulfideRed','o':'HTrans, eTrans','p':'HTrans, Oxidase','q':'HTrans, Monoox','r':'HTrans, NewMonoox'}
 
 
 """
@@ -569,35 +563,112 @@ Ask Q2 (function):
         i. prompt for description ->  Assign Bin -> write to the CSV
 """
 
-FILENAME = 'Flavoenzyme_Classification.csv'
-NUMBER_ENZYMES_LEFT = 0
-def readUnsortedEnzymes():
-    df = pd.read_csv(InFile)
-    return df[df.bin != 0]
+
+import pandas as pd
+
+FILE_NAME = 'Flavoenzyme_Classification.csv'
+DF = pd.read_csv(FILE_NAME)
+NUMBER_ENZYMES_LEFT = len(DF[DF.bin == 0])
+
+# question specific parameters 
+Red_answers_col_name = 'ReductionHalf'
+Red_answers = ['etrans', 'thiol', 'htrans', 'e', 't', 'h']
+Red_answers_prompt = "Enter one of: etrans(e), thiol(t), htrans(t). For example, you can enter 'etrans' or just 'e'"
+
+Ox_answers_col_name = 'OxidativeHalf'
+Ox_answers  = ['htrans', 'disulfide', 'etrans', 'oxidase', 'mono', 'newmono', 'h', 'd', 'e', 'o', 'm', 'n']
+Ox_answers_prompt = "Enter one of: htrans(h), disulfide(d), etrans(e), oxidase(o), mono(m), newmono(n)\nFor example, you can enter 'newmono' or just 'n'"
+
+bin_answer_map = {
+    'eTrans, HTrans': 'a',
+    'eTrans, DisulfideRed': 'b',
+    'eTrans, eTrans': 'c',
+    'eTrans, Oxidase': 'd',
+    'eTrans, Monoox': 'e',
+    'eTrans, NewMonoox': 'f',
+    'ThiolOx, HTrans': 'g',
+    'ThiolOx, DisulfideRed': 'h',
+    'ThiolOx, eTrans': 'i',
+    'ThiolOx, Oxidase': 'j',
+    'ThiolOx, Monoox': 'k',
+    'ThiolOx, NewMonoox': 'l',
+    'HTrans, HTrans': 'm',
+    'HTrans, DisulfideRed': 'n',
+    'HTrans, eTrans': 'o',
+    'HTrans, Oxidase': 'p',
+    'HTrans, Monoox': 'q',
+    'HTrans, NewMonoox': 'r'
+}
+
+'''
+
+'''
+def getUnsortedEnzymesIndex():
+    return DF[DF.bin == 0].index
+
+def saveProgressToCSV():
+    DF.to_csv(FILE_NAME,index=False)
+
+def writeToCSV(answer,index,column):
+    DF.iloc[index][column] = answer
+    saveProgressToCSV()
+
 def printGreeting():
-    print(f'Welcome to the BruceSorter!\nIt looks like there are {NUMBER_ENZYMES_LEFT} enzymes left to sort')
-def sortEnzymeEntry(entry,index):
-    answer = promptUser()
+    print("**************************************************")
+    print("***   Hi Bruce, ready to sort some enzymes?    ***")
+    print("**************************************************")
+    print(f'It looks like there are {NUMBER_ENZYMES_LEFT} enzymes left to sort')
+
+def askQuestion(index,prompt):
+    # todo
+    return input(prompt+"\n > ")
+
+def handleQuestion(index,possible_answers,prompt,column):
+    answer = askQuestion(index,prompt)
     if (answer == 'exit'):
         exit()
     elif (answer == 'NAF'):
-        writeNAFtoCSV()
-    elif answer in Q1_possibilities:
-        askQ2()
+        writeNAFtoCSV(index)
+    elif (answer in Red_answers) or (answer in ['other','idk']):
+        writeToCSV(answer,index,column)
     else:
         handleInvalidAnswer()
+
+def handleQ2(index):
+    answer = askQ2(index)
+    if (answer == 'exit'):
+        exit()
+    elif (answer == 'NAF'):
+        writeNAFtoCSV(index)
+    elif (answer in Ox_answers) or (answer in ['other','idk']):
+        writeQ1ToCSV(answer,index)
+        handleQ2(index)
+    else:
+        handleInvalidAnswer()
+
 def printDone():
     print('You are done! no more remaining enzymes')
-def askQ2():
-    return False
+
+def handleQ1():
+    handleQuestion(index, possible_answers=Red_answers, prompt=Red_answers_prompt, column=Red_answers_col_name)
+    writeQ1toCSV(index)
+    saveToCSV()
+
+def writeQ2toCSV(index):
+
+def handleQ2(index):
+    handleQuestion(index, possible_answers=Ox_answers, prompt=Ox_answers_prompt, column=Ox_answers_col_name)
+    writeQ2toCSV(index)
+    
 
 def main():
-    unsortedEnzymes = readUnsortedEnzymes()
-
+    unsortedEnzymes = getUnsortedEnzymesIndex()
     if unsortedEnzymes:
-        printGreeting() # this will print the remaining enzymes
-        for enzyme in unsortedEnzymes:
-            sortEnzymeEntry()
+        printGreeting() 
+        for index in unsortedEnzymes:
+            handleQ1(index)
+            handleQ2(index)
+            calculateBin(index)
     else:
         printDone() # this will say there is no remaining enzymes
 
