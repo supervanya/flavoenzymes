@@ -566,7 +566,7 @@ Ask Q2 (function):
 
 import pandas as pd
 
-FILE_NAME = 'Flavoenzyme_Classification.csv'
+FILE_NAME = 'flavoenzymes_to_sort.csv'
 DF = pd.read_csv(FILE_NAME)
 NUMBER_ENZYMES_LEFT = len(DF[DF.bin == 0])
 
@@ -620,9 +620,31 @@ def printGreeting():
     print(f'It looks like there are {NUMBER_ENZYMES_LEFT} enzymes left to sort')
 
 def askQuestion(index,prompt):
-    # todo
-    return input(prompt+"\n > ")
+    '''
+    prints the enzyme properties to the terminal
+    propmpts the user for answer
+    returns the answer
+    '''
+    name = DF.at[index,'SYSNAME']
+    substrates = json.loads(DF.at[index,'SUBSTRATE'])
+    products = json.loads(DF.at[index,'PRODUCT'])
+    ec = DF.at[index,'ec']
 
+    
+    print("This is the enzyme:")
+    print(f'Kegg link: https://www.genome.jp/dbget-bin/www_bget?ec:{ec}')
+    print(f'Brenda link: https://www.brenda-enzymes.info/enzyme.php?ecno={ec}')
+    
+    print(f"Name: {name}")
+    
+    print(f"Substrates:")
+    [print(f" • {s}") for s in substrates]
+    
+    print(f"Products:")
+    [print(f" • {p}") for p in products]
+    
+    return input(prompt + "\n > ")
+    
 def handleQuestion(index,possible_answers,prompt,column):
     answer = askQuestion(index,prompt)
     if (answer == 'exit'):
