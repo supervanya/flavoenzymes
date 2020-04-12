@@ -31,7 +31,7 @@ def NUMBER_ENZYMES_LEFT():
 FILE_NAME = 'flavoenzymes_to_sort.csv'
 DF = pd.read_csv(FILE_NAME)
 DF['bin'] = DF['bin'].astype(str)
-TERMINAL_WIDTH = 130
+TERMINAL_WIDTH = 80
 
 
 # question specific parameters 
@@ -56,16 +56,12 @@ other_answers = ['naf', 'idk', 'other']
 
 Ox_answers_col_name = 'OxidativeHalf'
 Ox_answers  = ['htrans', 'disulfide', 'etrans', 'oxidase', 'mono', 'newmono', 'h', 'd', 'e', 'o', 'm', 'n'] + other_answers
-Ox_answers_prompt = "\n==> Oxidative Half Reactions\nEnter: htrans(h), disulfide(d), etrans(e), oxidase(o), mono(m), newmono(n), other or idk\nFor example, you can enter 'newmono' or just 'n'"
-Ox_answers_prompt = f'''
-==> {Style.BRIGHT}Oxidative Half Reactions{Style.RESET_ALL}
+Ox_answers_prompt = f'''==> {Style.BRIGHT}Oxidative Half Reactions{Style.RESET_ALL}
 Options: {Fore.GREEN}etrans(e)   disulfide(d)   htrans(h)   oxidase(o)   mono(m)   newmono(n)   other   idk'''
 
 Red_answers_col_name = 'ReductionHalf'
 Red_answers = ['etrans', 'thiol', 'htrans', 'e', 't', 'h'] + other_answers
-Red_answers_prompt = "==> Reduction Half Reaction? (etrans(e), thiol(t), htrans(h), other, or idk)\nFor example, you can enter 'etrans' or just 'e'"
-Red_answers_prompt = f'''
-==> {Style.BRIGHT}Reduction Half Reactions{Style.RESET_ALL}
+Red_answers_prompt = f'''==> {Style.BRIGHT}Reduction Half Reactions{Style.RESET_ALL}
 Options: {Fore.GREEN}etrans(e)   thiol(t)   htrans(h)  other   idk'''
 
 # mappings
@@ -121,7 +117,7 @@ def saveProgressToCSV():
     printMessage('💾 Saved progress to CSV 💾',sep="=")
 
 def writeToDF(answer,index,column):
-    printMessage(f"Written '{answer}' for '{column}'")
+    printMessage(f"Written '{answer}' for column '{column}'")
     DF.loc[index,column] = answer
 
 def writeNAF(index):
@@ -202,8 +198,8 @@ def printEnzymeInfo(index):
     printCompoundInfo(products)
 
 def printCommands():
-    print(f"Type {Fore.GREEN}'exit'{Fore.RESET} to exit")
     print(f"Type {Fore.GREEN}'naf'{Fore.RESET} to mark as non-flavin")
+    print(f"Type {Fore.GREEN}'exit'{Fore.RESET} to exit")
 
 def quit():
     left = NUMBER_ENZYMES_LEFT()
@@ -232,10 +228,11 @@ def handleQuestion(index,possible_answers,prompt,column,answer=False):
         handleInvalidInput(answer,index,possible_answers,prompt,column)
 
 def handleQ1(index):
-    handleQuestion(index, possible_answers=Ox_answers, prompt=Ox_answers_prompt, column=Ox_answers_col_name)    
+    handleQuestion(index, possible_answers=Red_answers, prompt=Red_answers_prompt, column=Red_answers_col_name)
 
 def handleQ2(index):
-    handleQuestion(index, possible_answers=Red_answers, prompt=Red_answers_prompt, column=Red_answers_col_name)
+    handleQuestion(index, possible_answers=Ox_answers, prompt=Ox_answers_prompt, column=Ox_answers_col_name)    
+
 
 def askQuestions(index):
     handleQ1(index)
