@@ -1,3 +1,7 @@
+import sys
+import getopt
+import os
+
 import pandas as pd
 from colorama import Fore, Back, Style, init, deinit
 import json
@@ -28,11 +32,16 @@ class NotFlavoEnzymeError(ValueError):
 def NUMBER_ENZYMES_LEFT():
     return len(DF[DF.bin == '0'])
 
-FILE_NAME = 'flavoenzymes_to_sort.csv'
+# if filename is passed in, use it, otherwise use default
+FILE_NAME = ''
+try:
+    FILE_NAME = sys.argv[2:3][0]
+except:
+    FILE_NAME = 'flavoenzymes_to_sort.csv'
+
 DF = pd.read_csv(FILE_NAME)
 DF['bin'] = DF['bin'].astype(str)
 TERMINAL_WIDTH = 80
-
 
 # question specific parameters 
 L = f"{Fore.YELLOW}{NUMBER_ENZYMES_LEFT()}{Fore.GREEN}"
@@ -124,8 +133,6 @@ def writeNAF(index):
     printMessage("Reported as a naf(Not a Flavoenzyme)")
     writeToDF('naf',index,'bin')
 
-
-
 def printMessage(message, sep=False):
     if sep:
         print(f" {message} ".center(TERMINAL_WIDTH, sep))
@@ -133,7 +140,7 @@ def printMessage(message, sep=False):
         print(f"✅ {message} ✅".center(TERMINAL_WIDTH, ' '))
 
 def printEnd():
-    print('\n'*30)
+    print('\n'*5)
 
 def askPrompt(index,prompt):
     '''
@@ -207,8 +214,7 @@ def quit():
         print('You are done! no more remaining enzymes')
     else:
         printMessage(f'{left} enzymes left to sort, have a good day!')
-    exit()
-
+    sys.exit()
 
 def handleQuestion(index,possible_answers,prompt,column,answer=False):
     if not answer:
@@ -233,11 +239,6 @@ def handleQ1(index):
 def handleQ2(index):
     handleQuestion(index, possible_answers=Ox_answers, prompt=Ox_answers_prompt, column=Ox_answers_col_name)    
 
-
-def askQuestions(index):
-    handleQ1(index)
-    handleQ2(index)
-    
 def main():
     unsortedEnzymes = getUnsortedEnzymesIndex()
     if len(unsortedEnzymes) > 0:
@@ -245,7 +246,8 @@ def main():
         for index in unsortedEnzymes:
             printEnzymeInfo(index)
             try:
-                askQuestions(index)
+                handleQ1(index)
+                handleQ2(index)
             except NotFlavoEnzymeError:
                 writeNAF(index)
             else:
