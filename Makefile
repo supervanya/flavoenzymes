@@ -2,10 +2,28 @@ CSVGEN_INPUT=export/combined.json
 CSV_FILE=modules/bruce-sorter/flavoenzymes_to_sort.csv
 
 
-init:
-	pip install -r requirements.txt
-	echo "== dependencies finished installing == "
+# checkout --> pyenv 
 
+init:
+	( \
+       echo "== removing old virtual environment if exists == "\
+       rm -rf ENV;\
+       echo "== creating a virtual environment == ";\
+       virtualenv ENV;\
+       echo "== activating the virtual environment == ";\
+       source ENV/bin/activate;\
+       echo "== installing dependencies == ";\
+       pip install -r requirements.txt;\
+       echo "== All done ✅== ";\
+    )
+
+activate:
+	( \
+	source ENV/bin/activate; \
+	pip install -r requirements.txt; \
+	)
+
+	
 scrape:
 	echo "== running the scrapers == "
 	python scrape-flavoenzymes.py
