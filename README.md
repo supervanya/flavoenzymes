@@ -1,21 +1,22 @@
 # flavoenzymes
 
-### Getting Started
+## Getting Started
 1. To run the project create a virtual environment with Python 3.6
     - `virtualenv ENV`
 1. Activate the environment
     - `source ENV/bin/activate`
 1. Install dependancies
-    - `pip install -r requirements.txt`
+    - `pip install -r requirements.txt` or just type `make`
 
-### Run the pipeline
+---
 
+## Run the pipeline
 #### Scraping all the data
 > This will try to scrape all the information from all the websites that have been configured. 
 If existing file will be found in `./export/scraped-flavoenzymes.json` the programm will only update it if new entries will be found. (it will also make a backup of the existing file and save it with current date in filename) 
-- `python scrape-flavoenzymes.py
+- `python scrape-flavoenzymes.py`
 
-### Loading data into Neo4j (coming soon)
+#### Loading data into Neo4j
 
 <details>
 <summary>Here is the list of useful commands to run</summary>
@@ -85,7 +86,32 @@ MATCH (e:Enzyme)
 MATCH path = (e)-[]->(s:Substrate)
 RETURN path;
 ```
-
-
-
 </details>   
+
+## Other Modules
+<details>
+<summary>BruceSorter: Sorting flavoenzymes</summary>
+
+This project includes a comand line interface to sort through a `.csv` file of the following format (the data is not complete, this is just a sample):
+|        ec | SYSNAME         | SUBSTRATE                        | PRODUCT                  | bin | OxidativeHalf | ReductionHalf |
+|----------:|-----------------|----------------------------------|--------------------------|-----|---------------|---------------|
+| 1.14.13.2 | 3-hydroxylating | ["H+", "NADH", "NADP+", "NADPH"] | ["H2O", "NAD+", "NADP+"] |   0 |               |               |
+
+### You can generate csv by running the the `csv_generator.py`
+
+run in terminal
+
+`make csv`
+
+if you'd like to use custom file pass it using arguments like so:
+
+`make csv CSVGEN_INPUT=export/combined.json CSV_FILE=myfile.csv`
+
+to run bruce sorter:
+
+`make sort` 
+
+just like before, you can specify the csv file to sort by:
+
+`make sort CSV_FILE=myfile.csv`
+</details> 
