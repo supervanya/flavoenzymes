@@ -1,12 +1,25 @@
 # flavoenzymes
 
 ## Getting Started
-1. To run the project create a virtual environment with Python 3.6
-    - `virtualenv ENV`
-1. Activate the environment
-    - `source ENV/bin/activate`
-1. Install dependancies
-    - `pip install -r requirements.txt` or just type `make`
+### Prerequisites
+1. You must have Python 3.4 or above.
+    - Check whether you do by running `python3 --version`.
+1. You must have pip installed.
+   - Check whether you do by running `pip3 --version`
+
+### Setup
+1. Create virtual environment.
+    > you can do that manually or run the helper
+    - `python3 helpers/env_setup.py`
+1. Activate the virtual environment
+    > if you don't, all packages will be installed to your global environment, if you are ok with that, skip this step
+    - On MacOS or Linux run:
+        - `source flav_env/bin/activate`
+    - On Windows run:
+        - `flav_env\Scripts\activate.bat`
+1. Install dependancies.
+    - `pip install -r requirements.txt`
+
 
 ---
 
