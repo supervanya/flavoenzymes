@@ -7,6 +7,9 @@ CSV_FILE=export/flavoenzymes_to_sort.csv
 
 init:
 	python helpers/env_setup.py
+	echo "== installing dependencies == "
+	pip install -r requirements.txt
+	echo "== All done ✅== "
 
 scrape:
 	echo "== running the scrapers == "
