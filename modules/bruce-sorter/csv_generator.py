@@ -9,21 +9,14 @@ import pandas as pd
 
 
 def get_kwards(argv):
-    cwd = Path.cwd()
-    print(cwd)
-    print()
-
-    inputfile  = '../../export/combined.json'
-    outputfile = '../../export/flavoenzymes_to_sort.csv'
-
-    infres = Path(inputfile).absolute()
-    res = Path.resolve(infres)
-    print('lots of info:')
-    # print(res)
-    # print(Path().absolute())
-    # print(Path(__file__).parent.absolute())
-    # print(Path(__file__).absolute())
-    print(Path(infres).relative_to(cwd))
+    inputfile     = Path('export/combined.json').absolute()
+    outputfile    = Path('export/flavoenzymes_to_sort.csv').absolute()
+    cwd = Path.cwd().absolute()
+    cfd = Path(__file__).parent.absolute()
+    if cwd == cfd:
+        print('WARNING: you are running this file not from the root of the project, did you mean to do that? You can manually pass the arguments to this program, see instructions here: https://github.com/supervanya/flavoenzymes')
+        inputfile    = Path('../../export/combined.json').resolve()
+        outputfile   = Path('../../export/flavoenzymes_to_sort.csv').resolve()
 
     help = 'Please use the following format:\npython csv_generator.py -i <inputfile> -o <outputfile>'
     try:
@@ -65,10 +58,15 @@ def main(inputfile, outputfile):
     df['OxidativeHalf'] = 0
     df['ReductionHalf'] = 0
 
+    # make sure path exists
+    folder = outputfile.parent.absolute()
+    if not folder.exists():
+        Path(folder).mkdir(parents=True, exist_ok=True)
+
     # outputting the df
     df.to_csv(outputfile, index=False)
     print(f'✅ Success! Written out a csv to "{outputfile}""')
 
 if __name__ == "__main__":
     inputfile, outputfile = get_kwards(sys.argv[1:])
-    # main(inputfile, outputfile)
+    main(inputfile, outputfile)

@@ -37,7 +37,7 @@ FILE_NAME = ''
 try:
     FILE_NAME = sys.argv[2:3][0]
 except:
-    FILE_NAME = 'flavoenzymes_to_sort.csv'
+    FILE_NAME = 'export/flavoenzymes_to_sort.csv'
 
 DF = pd.read_csv(FILE_NAME)
 DF['bin'] = DF['bin'].astype(str)
