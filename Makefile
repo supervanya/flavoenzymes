@@ -3,6 +3,7 @@ CSV_FILE=modules/bruce-sorter/flavoenzymes_to_sort.csv
 
 
 # checkout --> pyenv 
+# create the script init.py
 
 init:
 	( \
