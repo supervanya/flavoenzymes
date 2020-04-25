@@ -1,16 +1,13 @@
 '''
-
+This script should ensure you have a functioning Python environment to run FLAVOENZYME SCRAPER
 '''
+
 import os
 from os import path
 import platform
 import subprocess
 
-# def activate_venv(venv_path):
-#     print('activating virtualenv')
-#     activate_this_file = f'{venv_path}/bin/activate_this.py'
-#     exec(compile(open(activate_this_file, 'rb').read(), activate_this_file, 'exec'), dict(__file__=activate_this_file))
-#     print('virtualenv activated')
+VENV_DIR_NAME = 'flav_env'
 
 def execute_system_command(command, show_command=True, show_output=True):
     if show_command:
@@ -28,9 +25,22 @@ def execute_system_command(command, show_command=True, show_output=True):
     return output
 
 
+def print_instructions(venv_path):
+    # if Windows
+    print('\n\nNext Step ➡︎')
+    if os.name == 'windows':
+        win_path = ''
+        print(f'Now execute: "{venv_path}\Scripts\\activate.bat"')
+        print(f'If you get an error, follow this guide: https://docs.python.org/3/library/venv.html')
+
+    # If posix
+    if os.name == 'posix':
+        print(f'Now execute: "source {venv_path}/bin/activate"')
+
+
 def print_os_info():
-    print(os.name)
-    print(f'{platform.system()}\t{platform.release()}')
+    print(f'OS: {os.name}')
+    print(f'Platform: {platform.system()}\t{platform.release()}')
 
 
 def create_venv(venv_path):
@@ -42,8 +52,7 @@ def create_venv(venv_path):
     # execute_system_command(f'source {venv_path}/bin/activate')
 
 
-
-def check_for_virtual_env(venv_dir_name='flavo_venv'):
+def check_for_virtual_env(venv_dir_name):
     # https://stackoverflow.com/a/58026969/872328
     running_in_virtualenv = "VIRTUAL_ENV" in os.environ
     print(f'Currently running in venv? {running_in_virtualenv}')
@@ -71,15 +80,13 @@ def check_for_virtual_env(venv_dir_name='flavo_venv'):
 
 def main():
     print_os_info()
-    venv_path_exists, venv_path = check_for_virtual_env('flavo_env3')
+    venv_path_exists, venv_path = check_for_virtual_env(VENV_DIR_NAME)
     if not venv_path_exists:
         create_venv(venv_path)
         check_for_virtual_env(venv_path)
 
-    # if Windows
+    print_instructions(venv_path)
 
-    # If posix
-    print(f'Now run "source {}"')
 
     # activate_venv(venv_path)
     # requirements_file_path = 'requirements.txt'
@@ -90,5 +97,4 @@ def main():
     
 
 if __name__ == '__main__':
-    print('This script should ensure you have a functioning Python environment to run FLAVOENZYME SCRAPER')
     main()
