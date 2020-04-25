@@ -1,5 +1,10 @@
 # flavoenzymes
 
+# TODO:
+- Check if dir deletion works on windows
+- Make sure env activation work like in readme and post creation text
+- 
+
 ## Getting Started
 ### Prerequisites
 1. You must have Python 3.4 or above.
