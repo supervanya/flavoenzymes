@@ -4,6 +4,7 @@ This script should ensure you have a functioning Python environment to run FLAVO
 
 import os
 from os import path
+from pathlib import Path, PureWindowsPath
 import platform
 import subprocess
 import shutil
@@ -27,11 +28,14 @@ def execute_system_command(command, show_command=True, show_output=True):
 
 
 def print_instructions(venv_path):
-    # if Windows
     print('\n')
+    
+    # if Windows
     if os.name == 'windows':
-        win_path = ''
-        print(f'➡︎ Now execute: "{venv_path}\Scripts\\activate.bat"')
+        win_path = Path(venv_path) / "Scripts/activate.bat"
+        win_path = PureWindowsPath(win_path)
+
+        print(f'➡︎ Now execute: "{win_path}"')
         print(f'If you get an error, follow this guide: https://docs.python.org/3/library/venv.html')
 
     # If posix

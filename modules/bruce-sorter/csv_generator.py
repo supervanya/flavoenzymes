@@ -1,16 +1,29 @@
 import sys
 import getopt
 import os
+from pathlib import Path
+
 
 import json
 import pandas as pd
-import numpy as np
-from numpy import nan
 
 
 def get_kwards(argv):
-    inputfile = '../../export/combined.json'
-    outputfile = 'flavoenzymes_to_sort.csv'
+    cwd = Path.cwd()
+    print(cwd)
+    print()
+
+    inputfile  = '../../export/combined.json'
+    outputfile = '../../export/flavoenzymes_to_sort.csv'
+
+    infres = Path(inputfile).absolute()
+    res = Path.resolve(infres)
+    print('lots of info:')
+    # print(res)
+    # print(Path().absolute())
+    # print(Path(__file__).parent.absolute())
+    # print(Path(__file__).absolute())
+    print(Path(infres).relative_to(cwd))
 
     help = 'Please use the following format:\npython csv_generator.py -i <inputfile> -o <outputfile>'
     try:
@@ -27,7 +40,7 @@ def get_kwards(argv):
         elif opt in ("-o", "--ofile"):
             outputfile = arg
 
-    return inputfile, outputfile
+    return Path(inputfile), Path(outputfile)
 
 
 def read_json_data(path):
@@ -57,6 +70,5 @@ def main(inputfile, outputfile):
     print(f'✅ Success! Written out a csv to "{outputfile}""')
 
 if __name__ == "__main__":
-    # print(sys.argv)
     inputfile, outputfile = get_kwards(sys.argv[1:])
-    main(inputfile, outputfile)
+    # main(inputfile, outputfile)

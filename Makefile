@@ -1,5 +1,5 @@
 CSVGEN_INPUT=export/combined.json
-CSV_FILE=modules/bruce-sorter/flavoenzymes_to_sort.csv
+CSV_FILE=export/flavoenzymes_to_sort.csv
 
 
 # checkout --> pyenv 
