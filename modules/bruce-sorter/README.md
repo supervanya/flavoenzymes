@@ -1,6 +1,6 @@
-# Bruce Sorter
+# BruceSorter
 
-This was originally written by [Emilly Roberts](https://github.com/emroberts95) and later refactored by [Ivan Prokopovich](https://github.com/supervanya)
+> BruceSorter was originally written by [Emilly Roberts](https://github.com/emroberts95) and later refactored by [Ivan Prokopovich](https://github.com/supervanya). Name is a reference to the vast knowledge of [Bruce Palfey](https://scholar.google.com/citations?user=xsPM4ecAAAAJ) who had to sort the flavoenzymes so we wrote a CLI to allow him to quickly classify and filter scraped enzymes.
 
 Before using the Sorter, you must:
 1. run the pipeline to generate the `scraped_flavoenzymes.json`
