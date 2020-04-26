@@ -1,6 +1,7 @@
 import sys
 import getopt
-import os
+from pathlib import Path
+
 
 import pandas as pd
 from colorama import Fore, Back, Style, init, deinit
@@ -26,24 +27,35 @@ Ask Q2 (function):
         i. prompt for description ->  Assign Bin -> write to the CSV
 """
 
-class NotFlavoEnzymeError(ValueError):
-    pass
+# if filename is passed in, use it, otherwise use defaults
+FILE_PATH = ''
+try:
+    FILE_PATH = Path(sys.argv[2:3][0])
+except:
+    cwd = Path.cwd().absolute()
+    cfd = Path(__file__).parent.absolute()
+    if cwd == cfd:
+        print(f'{Fore.YELLOW}WARNING{Fore.RESET}: you are running this file not from the root of the project, did you mean to do that?\nYou can manually pass the arguments to this program, see instructions here: https://github.com/supervanya/flavoenzymes\n')
+        FILE_PATH = Path('../../export/flavoenzymes_to_sort.csv').resolve()
+    else:
+        FILE_PATH = Path('export/flavoenzymes_to_sort.csv')
 
+# reading in the csv
+DF = ''
+try:
+    DF = pd.read_csv(FILE_PATH)
+    DF['bin'] = DF['bin'].astype(str)
+except FileNotFoundError as e:
+    print(f'{Fore.RED}ERROR{Fore.RESET}: File "{FILE_PATH}" not found.\nDid you make sure to generate the csv file using csv_generator? See instructions here https://github.com/supervanya/flavoenzymes ')
+    sys.exit()
+
+
+# returns the number of enzymes not sorted
 def NUMBER_ENZYMES_LEFT():
     return len(DF[DF.bin == '0'])
 
-# if filename is passed in, use it, otherwise use default
-FILE_NAME = ''
-try:
-    FILE_NAME = sys.argv[2:3][0]
-except:
-    FILE_NAME = 'export/flavoenzymes_to_sort.csv'
-
-DF = pd.read_csv(FILE_NAME)
-DF['bin'] = DF['bin'].astype(str)
-TERMINAL_WIDTH = 80
-
 # question specific parameters 
+TERMINAL_WIDTH = 80
 L = f"{Fore.YELLOW}{NUMBER_ENZYMES_LEFT()}{Fore.GREEN}"
 WELCOME_MESSAGE = f'''{Fore.GREEN}
                      ┌────────────────────────────────┐                 
@@ -115,6 +127,9 @@ bin_answer_map = {
     'HTrans, NewMonoox': 'r'
 }
 
+class NotFlavoEnzymeError(ValueError):
+    pass
+
 def printGreeting():
     print(WELCOME_MESSAGE)
 
@@ -122,7 +137,7 @@ def getUnsortedEnzymesIndex():
     return DF[DF.bin == '0'].index
 
 def saveProgressToCSV():
-    DF.to_csv(FILE_NAME,index=False)
+    DF.to_csv(FILE_PATH,index=False)
     printMessage('💾 Saved progress to CSV 💾',sep="=")
 
 def writeToDF(answer,index,column):
