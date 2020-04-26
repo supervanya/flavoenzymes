@@ -164,8 +164,10 @@ def get_smile_string(compound_id, useCaching=USE_CACHING):
             ChEBI_resp = chebi_con.getCompleteEntity(ChEBI_id)
             smiles_string = str(ChEBI_resp.smiles)
         except AttributeError as e:
+            CACHE_DICTION[unique_ident] = None
             raise Exception(f'ChEBI_id: {ChEBI_id} does not have a SMILES string. Original Error {e}')
         except WebFault as e:
+            CACHE_DICTION[unique_ident] = None
             raise Exception(f'ChEBI_id: {ChEBI_id} not found. Original Error {e}')
             
         
