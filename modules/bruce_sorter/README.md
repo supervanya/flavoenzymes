@@ -2,17 +2,17 @@
 
 > BruceSorter was originally written by [Emilly Roberts](https://github.com/emroberts95) and later refactored by [Ivan Prokopovich](https://github.com/supervanya). Name is a reference to the vast knowledge of [Bruce Palfey](https://scholar.google.com/citations?user=xsPM4ecAAAAJ) who had to sort the flavoenzymes so we wrote a CLI to allow him to quickly classify and filter scraped enzymes.
 
-Note: This README file's instructions are for UNIX systems
+⚠️ __Important__: run all the commands from the root of the repo
+
+**Note**: This README file's instructions are for UNIX systems
+
 
 ## Getting Started:
-
-Before using the Sorter, you must:
-1. Acquire flavoenzyme data --> [run the pipeline](https://github.com/supervanya/flavoenzymes/blob/master/README.md) to generate the `scraped_flavoenzymes.json`
-2. Generate the `flavoenzymes_to_sort.csv` (instructions below)
+Before using the Sorter, you need two files:
+1. `scraped_flavoenzymes.json` - flavoenzyme data (instructions to generate [here](https://github.com/supervanya/flavoenzymes/tree/master#run-the-pipeline))
+2. `flavoenzymes_to_sort.csv` (instructions to generate below)
 
 ## Generating the CSV
-
-
 ### You can generate csv by running the the `csv_generator.py`
 
 run in terminal:
