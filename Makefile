@@ -6,7 +6,7 @@ CSV_FILE=export/flavoenzymes_to_sort.csv
 # create the script init.py
 
 init:
-	python helpers/env_setup.py
+	python modules/helpers/env_setup.py
 	echo "== installing dependencies == "
 	pip install -r requirements.txt
 	echo "== All done ✅== "
@@ -16,10 +16,10 @@ scrape:
 	python scrape-flavoenzymes.py
 
 csv:
-	python modules/bruce-sorter/csv_generator.py --ifile $(CSVGEN_INPUT) --ofile $(CSV_FILE)
+	python modules/bruce_sorter/csv_generator.py --ifile $(CSVGEN_INPUT) --ofile $(CSV_FILE)
 
 sort:
-	python modules/bruce-sorter/BruceSorter_485.py  --ifile $(CSV_FILE)
+	python modules/bruce_sorter/BruceSorter_485.py  --ifile $(CSV_FILE)
 
 clean_cache:
 	rm export/cache.json
