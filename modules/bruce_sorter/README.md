@@ -8,10 +8,10 @@ Before using the Sorter, you must:
 
 ## Running the BruceSorter
 to run the sorter, simply run:
-  - `python modules/bruce-sorter/BruceSorter_485.py`
+  - `python modules/bruce_sorter/BruceSorter_485.py`
 
 you can specify which file to sort by passing an argument:
-  - `python modules/bruce-sorter/BruceSorter_485.py -i "path/to/enzymes.csv"`
+  - `python modules/bruce_sorter/BruceSorter_485.py -i "path/to/enzymes.csv"`
 
 while running the sorter, you can specify answer by typing the first letter of the answer.
 ```python
@@ -32,9 +32,9 @@ This project includes a comand line interface to sort through a `.csv` file of t
 ### You can generate csv by running the the `csv_generator.py`
 
 run in terminal:
-  - `python3 modules/bruce-sorter/csv_generator.py`
+  - `python3 modules/bruce_sorter/csv_generator.py`
   > This will output a csv to the `export` folder
 
 if you'd like to use custom input or output file pass it using arguments like so:
-  - `python3 modules/bruce-sorter/csv_generator.py -i "path/to/in.json" -o "path/to/out.csv"`
+  - `python3 modules/bruce_sorter/csv_generator.py -i "path/to/in.json" -o "path/to/out.csv"`
 

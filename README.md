@@ -15,7 +15,7 @@
 ### Setup
 1. Create virtual environment.
     > you can do that manually or run the helper
-    - `python3 helpers/env_setup.py`
+    - `python3 modules/helpers/env_setup.py`
 1. Activate the virtual environment
     > if you don't, all packages will be installed to your global environment, if you are ok with that, skip this step
     - On MacOS or Linux run:
