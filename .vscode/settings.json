@@ -1,3 +1,7 @@
 {
-    "python.pythonPath": "flav_env/bin/python"
+    "python.pythonPath": "flav_env/bin/python",
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.ipynb_checkpoints": true
+    }
 }
