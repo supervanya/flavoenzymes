@@ -35,7 +35,7 @@ except:
     cwd = Path.cwd().absolute()
     cfd = Path(__file__).parent.absolute()
     if cwd == cfd:
-        print(f'{Fore.YELLOW}WARNING{Fore.RESET}: you are running this file not from the root of the project, did you mean to do that?\nYou can manually pass the arguments to this program, see instructions here: https://github.com/supervanya/flavoenzymes\n')
+        print(f'{Fore.YELLOW}WARNING{Fore.RESET}: you are running this file not from the root of the project, did you mean to do that?\nYou can manually pass the arguments to this program, see instructions here: https://github.com/supervanya/flavoenzymes/tree/master/modules/bruce_sorter\n')
         FILE_PATH = Path('../../export/flavoenzymes_to_sort.csv').resolve()
     else:
         FILE_PATH = Path('export/flavoenzymes_to_sort.csv')
@@ -46,7 +46,7 @@ try:
     DF = pd.read_csv(FILE_PATH)
     DF['bin'] = DF['bin'].astype(str)
 except FileNotFoundError as e:
-    print(f'{Fore.RED}ERROR{Fore.RESET}: File "{FILE_PATH}" not found.\nDid you make sure to generate the csv file using csv_generator? See instructions here https://github.com/supervanya/flavoenzymes ')
+    print(f'{Fore.RED}ERROR{Fore.RESET}: File "{FILE_PATH}" not found.\nDid you make sure to generate the csv file using csv_generator? See instructions here https://github.com/supervanya/flavoenzymes/tree/master/modules/bruce_sorter')
     sys.exit()
 
 
