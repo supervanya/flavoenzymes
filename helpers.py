@@ -26,9 +26,9 @@ def log(message, verbosity):
         current_time = now.strftime("%H:%M:%S")
         print(f'{current_time} [{verbosity}]: {message}')
         
-def should_log(verbosity):
-    print(f'verbosity{verbosity}, VERBOSITY{VERBOSITY}')
-    message_level = verbosity_to_levels[verbosity]
+def should_log(message_verbosity):
+    # print(f'verbosity: {message_verbosity}, VERBOSITY: {VERBOSITY}')
+    message_level = verbosity_to_levels[message_verbosity]
     global_level = verbosity_to_levels[VERBOSITY]
     
     if message_level <= global_level:
