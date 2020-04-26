@@ -5,6 +5,9 @@ p = Path('/home/antoine/pathlib/setup.py')
 p.relative_to('/home/antoine')
 
 
+# https://www.geeksforgeeks.org/python-merging-two-list-of-dictionaries/?ref=rp
+# merging two lists of dicst, could use later? or will be using the Neo4j?
+
 def scope_test():
     def do_local():
         spam = "local spam"
