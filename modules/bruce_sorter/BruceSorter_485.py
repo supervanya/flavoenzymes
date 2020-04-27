@@ -1,14 +1,4 @@
-import sys
-import getopt
-from pathlib import Path
-
-
-import pandas as pd
-from colorama import Fore, Back, Style, init, deinit
-import json
-
-"""
-Program Flow:
+"""Program Flow:
 1. Prints entree (ENZYME) from the csv
 2. Q1. Prompts the user for the classification (options: exit | naf | ......real classifications..... )
     a. If answer is valid classification -> write to the CSV
@@ -26,6 +16,15 @@ Ask Q2 (function):
     b. If answer is 'other:
         i. prompt for description ->  Assign Bin -> write to the CSV
 """
+
+import sys
+import getopt
+from pathlib import Path
+
+
+import pandas as pd
+from colorama import Fore, Back, Style, init, deinit
+import json
 
 # if filename is passed in, use it, otherwise use defaults
 FILE_PATH = ''
