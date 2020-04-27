@@ -29,7 +29,7 @@ def log(message, verbosity):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         verb_color = verbosity_to_color[verbosity]
-        print(f'{current_time} [{verb_color}]:\t{message}')
+        print(f'{current_time} [{verb_color}]\t{message}')
         
 def should_log(message_verbosity):
     # print(f'verbosity: {message_verbosity}, VERBOSITY: {VERBOSITY}')

@@ -2,19 +2,19 @@ import pandas as pd
 from pathlib import Path
 
 from modules.helpers import logger
-from modules.scrapers.kegg import search as search_kegg
-from modules.scrapers.brenda import search as search_brenda
+from modules.scrapers.kegg.search import kegg_search 
+from modules.scrapers.brenda.search import brenda_search
 
 
-def create_fetch_list(prev_list):
+def create_fetch_list(prev_list, kegg_keywords, brenda_keywords):
     '''prev_list must be set() | returns a set()'''
     whitelist_path = Path('modules/scrapers/whitelist.csv')
     blacklist_path = Path('modules/scrapers/blacklist.csv')
     
     white_list   = set(pd.read_csv(whitelist_path)['ec'])
     black_list   = set(pd.read_csv(blacklist_path)['ec'])
-    brenda_list  = search_brenda()
-    kegg_list    = search_kegg()
+    brenda_list  = brenda_search(brenda_keywords)
+    kegg_list    = kegg_search(kegg_keywords)
     new_list     = brenda_list|kegg_list # this are all the results that came back from kegg and brenda
 
     # combining the lists

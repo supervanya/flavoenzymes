@@ -9,9 +9,10 @@
 # print(scrape_brenda) 
 
 from modules.scrapers.fetch_ecs import create_fetch_list
+from GLOBALS import KEYWORDS
 
 def main():
-    fetch_list = create_fetch_list()
+    fetch_list = create_fetch_list(prev_list=set(), kegg_keywords=KEYWORDS, brenda_keywords=KEYWORDS)
         # takes inro account the whitelist and blacklist
         # searches brenda
         # searches kegg
