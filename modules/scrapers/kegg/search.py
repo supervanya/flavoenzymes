@@ -5,7 +5,7 @@ k = bioservices.kegg.KEGG()
 parser = bioservices.kegg.KEGGParser()
 
 def get_ids(keyword):
-    log(f'fetching enzymes for {keyword}','info')
+    log(f'Fetching enzymes for {keyword} on KEGG','info')
     results = k.find(database='enzyme', query=keyword)
     results_array = results.split('\n')
     ids_array = [i.split('\t')[0] for i in results_array if (i)]
