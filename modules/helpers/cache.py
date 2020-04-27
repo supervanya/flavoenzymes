@@ -1,13 +1,15 @@
-# caching impolementation for the API requests
+# caching implementation for the API requests
 import requests
 import json
 import zeep
 import bioservices
+from pathlib import Path
+
 
 # local imports
 from GLOBALS import USE_CACHING 
-from helpers import log 
-from helpers import should_log 
+from modules.helpers.logger import log 
+from modules.helpers.logger import should_log 
 
 # local instantiations
 k = bioservices.kegg.KEGG()
@@ -16,7 +18,7 @@ map_kegg_chebi = k.conv("chebi", "compound")
 
 
 # <----- CACHING TO FILE ----->
-CACHE_FNAME = 'export/cache.json'
+CACHE_FNAME = Path('export/cache.json')
 
 def cache_init():
     try:
