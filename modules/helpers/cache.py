@@ -119,7 +119,7 @@ def brenda_cached_reqest(request_name, params, request_fn, useCaching=USE_CACHIN
     return CACHE_DICTION[unique_ident]
 
 
-def kegg_cached_reqest(request_name, ec, request_fn, useCaching=USE_CACHING):
+def kegg_cached_reqest(request_name, ec, request_fn=k.get, useCaching=USE_CACHING):
     unique_ident = params_unique_combination(baseurl=request_name, params={'ec':ec})
     
     # first, look in the cache to see if we already have this data

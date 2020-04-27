@@ -16,12 +16,12 @@ verbosity_to_levels = {
 
 verbosity_to_color = {
     'none':    'none',
-    'success': f'{Fore.GREEN}✔SUCCESS{Fore.RESET}',
-    'error':   f'{Fore.RED}⨯ERROR{Fore.RESET}',
-    'warning': f'{Fore.YELLOW}⚠WARNING{Fore.RESET}',
-    'info':    f'{Fore.GREEN}ℹINFO{Fore.RESET}',
-    'debug':   f'{Fore.BLUE}•DEBUG{Fore.RESET}',
-    'silly':   f'{Fore.MAGENTA}~SILLY{Fore.RESET}',
+    'success': f'{Fore.GREEN}✔success{Fore.RESET}',
+    'error':   f'{Fore.RED}⨯error{Fore.RESET}',
+    'warning': f'{Fore.YELLOW}⚠warning{Fore.RESET}',
+    'info':    f'{Fore.GREEN}ℹinfo{Fore.RESET}',
+    'debug':   f'{Fore.BLUE}•debug{Fore.RESET}',
+    'silly':   f'{Fore.MAGENTA}~silly{Fore.RESET}',
     }
 
 def log(message, verbosity):

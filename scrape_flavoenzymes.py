@@ -8,17 +8,21 @@
 # import modules.scrapers
 # print(scrape_brenda) 
 
-from modules.scrapers.fetch_ecs import create_fetch_list
+from modules.scrapers.scrape_driver import create_list
+from modules.scrapers.scrape_driver import scrape_all
 from GLOBALS import KEYWORDS
 
 def main():
-    fetch_list = create_fetch_list(prev_list=set(), kegg_keywords=KEYWORDS, brenda_keywords=KEYWORDS)
-        # takes inro account the whitelist and blacklist
-        # searches brenda
-        # searches kegg
-        
-    # kegg_data = scrapers.scrape_kegg()
-    # brenda_data = scrapers.scrape_brenda()
+    # TODO: still need to fetch past data
+    # takes into account the whitelist and blacklist
+    missing_list = create_list(prev_list=set(), kegg_keywords=KEYWORDS, brenda_keywords=KEYWORDS)
+
+    # searches brenda
+    # searches kegg
+    scraped_results = scrape_all(missing_list)
+
+    # write it out to a file
+    
     pass
 
 if __name__ == "__main__":
