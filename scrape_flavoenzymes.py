@@ -8,10 +8,13 @@
 # import modules.scrapers
 # print(scrape_brenda) 
 
-from modules.scrapers import fetch_ecs
+from modules.scrapers.fetch_ecs import ec_list
 
 def main():
-    ec_list = fetch_ecs()
+    L = ec_list()
+    L.print()
+    L.search_brenda()
+    L.search_kegg()
         # takes inro account the whitelist and blacklist
         # searches brenda
         # searches kegg
