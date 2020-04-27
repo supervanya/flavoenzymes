@@ -4,17 +4,39 @@
 - Check if dir deletion works on windows
 - Make sure env activation work like in readme and post creation text
 - 
+⚠️ __Important__:
+- run all the commands from the root of the repo
 
 ## Getting Started
-### Prerequisites
-1. You must have Python 3.4 or above.
-    - Check whether you do by running `python3 --version`.
+**Prerequisites**
+1. You must have Python 3.3 or above.
+    - Check whether you do by running `python3 --version` or `python --version`.
 1. You must have pip installed.
-   - Check whether you do by running `pip3 --version`
+   - Check whether you do by running `pip3 --version` or `pip --version`
 
-### Setup
+## Quick start
+```
+python3 -m venv flav_env
+. flav_env/bin/activate
+pip install -r requirements.txt
+python3 scrape-flavoenzymes.py
+```
+<details><summary>Windows Instructions</summary>
+
+```
+python -m venv flav_env
+flav_env\Scripts\activate.bat
+pip install -r requirements.txt
+python scrape-flavoenzymes.py
+```
+</details>
+
+
+If somethign didn't work, follow these step by step instructions:
+<details><summary>Step by step</summary>
+
+**Virtual environment setup**
 1. Create virtual environment.
-    > you can do that manually or run the helper
     - `python3 modules/helpers/env_setup.py`
 1. Activate the virtual environment
     > if you don't, all packages will be installed to your global environment, if you are ok with that, skip this step
@@ -22,19 +44,22 @@
         - `source flav_env/bin/activate`
     - On Windows run:
         - `flav_env\Scripts\activate.bat`
-1. Install dependancies.
+1. Install dependancies within the environment.
     - `pip install -r requirements.txt`
+
+**Run the pipeline**
+Scraping all the data
+  > This will try to scrape all the information from all the websites that have been configured. 
+If existing file will be found in `./export/scraped_flavoenzymes.json` the programm will only update it if new entries will be found. (it will also make a backup of the existing file and save it with current date in filename) 
+  - `python scrape-flavoenzymes.py`
+
+</details>
 
 
 ---
 
-## Run the pipeline
-#### Scraping all the data
-> This will try to scrape all the information from all the websites that have been configured. 
-If existing file will be found in `./export/scraped_flavoenzymes.json` the programm will only update it if new entries will be found. (it will also make a backup of the existing file and save it with current date in filename) 
-- `python scrape-flavoenzymes.py`
 
-#### Loading data into Neo4j
+## Loading data into Neo4j
 
 <details>
 <summary>Here is the list of useful commands to run</summary>
