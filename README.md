@@ -134,4 +134,4 @@ RETURN path;
 ---
 
 ## Other Modules
-[BruceSorter: Sorting flavoenzymes ADD LINK HERE!!!]()
+[BruceSorter:](modules/bruce_sorter/README.md) Sorting flavoenzymes
