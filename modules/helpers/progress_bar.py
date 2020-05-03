@@ -24,7 +24,8 @@ def print_percent_done(index, total, bar_len=50, title='Please wait'):
         print('\t✅')
 
 
+# This is a sample code to test the progress bar
 # r = 50
 # for i in range(r):
 #     print_percent_done(i,r,bar_len=25)
-#     time.sleep(.92)
+#     time.sleep(.22)
