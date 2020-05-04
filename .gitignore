@@ -1,3 +1,7 @@
+# this project specific files
+# cache.json
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -129,10 +133,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# this project specific files
-cache.json
-
 
 # MacOS files (source: https://github.com/github/gitignore/blob/master/Global/macOS.gitignore)
 # General
