@@ -1,5 +1,6 @@
 # this project specific files
 cache.json
+archive/*
 
 
 # Byte-compiled / optimized / DLL files
