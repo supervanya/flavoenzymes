@@ -1,5 +1,5 @@
 # this project specific files
-# cache.json
+cache.json
 
 
 # Byte-compiled / optimized / DLL files
@@ -161,4 +161,3 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-
