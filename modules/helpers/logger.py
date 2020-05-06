@@ -42,8 +42,8 @@ def log(message, verbosity):
         file_path = LOGS_PATH / file_name
 
         # Writing out the results to the file
-        with open(file_path.absolute(), "a") as outfile:
-            outfile.write(f"{current_time} [{verbosity}]\t{message}\n")
+        # with open(file_path.absolute(), "a") as outfile:
+        #     outfile.write(f"{current_time} [{verbosity}]\t{message}\n")
 
 
 def should_log(message_verbosity):
