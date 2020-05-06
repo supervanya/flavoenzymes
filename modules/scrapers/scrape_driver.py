@@ -23,7 +23,7 @@ def read_json_data(path):
 def write_out(new_data):
     export_results(new_data, SCRAPE_OUTPUT_PATH)
     log(
-        f"{len(new_data)} enzymes have been written out to {Path(SCRAPE_OUTPUT_PATH).absolute()} 🎉",
+        f"{len(new_data)} enzymes have been written out to {Path(SCRAPE_OUTPUT_PATH).absolute()}",
         "success",
     )
 

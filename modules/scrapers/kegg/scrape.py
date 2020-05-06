@@ -84,7 +84,8 @@ def get_all_data(fetch_list):
         data_dict[id] = ec_data
 
         log(f"Scraping data for - {ec_number}", "debug")
-        log(f"Getting following data - {data_dict[id]}", "silly")
+        # log(f"Getting following data - {data_dict[id]}", "silly")
+        
         # progress bar
         print_percent_done(
             index=index, total=len(fetch_list), title="Scraping Kegg, please wait..."
