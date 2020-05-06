@@ -2,6 +2,9 @@
 
 ⚠️ __Important__:
 - run all the commands from the root of the repo
+- On windows, replace `/` with `\` when specifying path
+- If you normally run python3 instead of python, try it if having difficulty setting up virtual environment
+
 
 ## Getting Started
 **Prerequisites**
