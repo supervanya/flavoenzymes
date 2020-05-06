@@ -8,13 +8,14 @@
 # import modules.scrapers
 # print(scrape_brenda)
 
+from GLOBALS import KEYWORDS
+
 from modules.scrapers.scrape_driver import create_missing_list
 from modules.scrapers.scrape_driver import scrape_all
-from GLOBALS import KEYWORDS
+from modules.scrapers.scrape_driver import write_out
 
 
 def main():
-    # TODO: still need to read past data to see prev_list
     # takes into account the whitelist and blacklist
     missing_list = create_missing_list(kegg_keywords=KEYWORDS, brenda_keywords=KEYWORDS)
 
@@ -24,8 +25,8 @@ def main():
     scraped_results = scrape_all(missing_list)
 
     # write it out to a file
-
-    pass
+    if len(scraped_results) > 0:
+        write_out(scraped_results)
 
 
 if __name__ == "__main__":
