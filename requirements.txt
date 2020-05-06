@@ -1,3 +1,4 @@
 zeep
 colorama
 bioservices
+pandas

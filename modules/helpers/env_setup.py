@@ -33,10 +33,12 @@ def print_instructions(venv_path):
     # if Windows
     if os.name == 'nt':
         win_path = Path(venv_path) / "Scripts/activate.bat"
+        ps_path = Path(venv_path) / "Scripts/Activate.ps1"
         win_path = PureWindowsPath(win_path)
 
-        print(f'➡︎ Now execute: "{win_path}"')
-        print(f'If you get an error, follow this guide: https://docs.python.org/3/library/venv.html')
+        print(f'➡︎ Now execute: "{win_path}"\nIf you are using powershell type this instead {ps_path}')
+        print(f'If you get an error you might need to enable execution policy, follow this guide: https://docs.python.org/3/library/venv.html')
+        print(f'To allow PowerShell to activate virtyal env run this: "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser"')
 
     # If posix
     if os.name == 'posix':
