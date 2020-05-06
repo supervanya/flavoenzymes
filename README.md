@@ -19,7 +19,7 @@
 python3 modules/helpers/env_setup.py
 # IMPORTANT: activate your virtual environment using instructions printed from the command above
 pip install -r requirements.txt
-python3 scrape-flavoenzymes.py
+python3 scrape_flavoenzymes.py
 ```
 
 If somethign didn't work, follow these step by step instructions:
@@ -42,7 +42,7 @@ If somethign didn't work, follow these step by step instructions:
 Scraping all the data
   > This will try to scrape all the information from all the websites that have been configured. 
 If existing file will be found in `./export/scraped_flavoenzymes.json` the programm will only update it if new entries will be found. (it will also make a backup of the existing file and save it with current date in filename) 
-  - `python scrape-flavoenzymes.py`
+  - `python scrape_flavoenzymes.py`
 
 
 
