@@ -4,7 +4,7 @@ from GLOBALS import VERBOSITY
 from modules.helpers.logger import should_log
 
 
-def print_percent_done(index, total, bar_len=50, verbosity="info", title="Please wait"):
+def print_percent_done(index, total, bar_len=25, verbosity="info", title="Please wait"):
     """
     index is expected to be 0 based index. 
     0 <= index < total
