@@ -1,4 +1,3 @@
-DEBUG = True
 USE_CACHING = True
 FILE_LOGGING_ENABLED = True
 
@@ -19,4 +18,3 @@ KEYWORDS = [
     "flavoprotein",
     "flavo protein",
 ]
-# KEYWORDS = ["flavoenzyme"]  # TODO: very important, make sure this is removed!
