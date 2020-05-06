@@ -46,9 +46,6 @@ Scraping all the data
 </details>
 
 
----
-
-
 ## Loading data into Neo4j
 
 <details>
@@ -121,7 +118,6 @@ RETURN path;
 ```
 </details>   
 
----
 
 ## Other Modules
-[BruceSorter:](modules/bruce_sorter/README.md) Sorting flavoenzymes
+[BruceSorter:](modules/bruce_sorter/README.md) A CLI to help with sorting flavoenzymes and filtering out false positives
