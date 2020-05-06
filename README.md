@@ -1,22 +1,18 @@
 # flavoenzymes
 
-# TODO:
-- Check if dir deletion works on windows
-- Make sure env activation work like in readme and post creation text
-- 
 ⚠️ __Important__:
 - run all the commands from the root of the repo
 
 ## Getting Started
 **Prerequisites**
 1. You must have Python 3.3 or above.
-    - Check whether you do by running `python3 --version` or `python --version`.
+    - Check whether you do by running `python --version` or `python --version`.
 1. You must have pip installed.
    - Check whether you do by running `pip3 --version` or `pip --version`
 
 ## Quick start
 ```sh
-python3 modules/helpers/env_setup.py
+python modules/helpers/env_setup.py
 # IMPORTANT: activate your virtual environment using instructions printed from the command above
 pip install -r requirements.txt
 python scrape_flavoenzymes.py
@@ -27,7 +23,7 @@ If somethign didn't work, follow these step by step instructions:
 
 **Virtual environment setup**
 1. Create virtual environment.
-    - `python3 modules/helpers/env_setup.py`
+    - `python modules/helpers/env_setup.py`
 1. Activate the virtual environment
     > if you don't, all packages will be installed to your global environment, if you are ok with that, skip this step
     - On MacOS or Linux run:
