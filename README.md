@@ -15,22 +15,12 @@
    - Check whether you do by running `pip3 --version` or `pip --version`
 
 ## Quick start
-```
-python3 -m venv flav_env
-. flav_env/bin/activate
+```sh
+python3 modules/helpers/env_setup.py
+# IMPORTANT: activate your virtual environment using instructions printed from the command above
 pip install -r requirements.txt
 python3 scrape-flavoenzymes.py
 ```
-<details><summary>Windows Instructions</summary>
-
-```
-python -m venv flav_env
-flav_env\Scripts\activate.bat
-pip install -r requirements.txt
-python scrape-flavoenzymes.py
-```
-</details>
-
 
 If somethign didn't work, follow these step by step instructions:
 <details><summary>Step by step</summary>
