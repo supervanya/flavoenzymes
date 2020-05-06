@@ -12,7 +12,7 @@
 
 ## Quick start
 ```sh
-python modules/helpers/env_setup.py
+python env_setup.py
 # IMPORTANT: activate your virtual environment using instructions printed from the command above
 pip install -r requirements.txt
 python scrape_flavoenzymes.py
