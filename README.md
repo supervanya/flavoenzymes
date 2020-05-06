@@ -19,7 +19,7 @@
 python3 modules/helpers/env_setup.py
 # IMPORTANT: activate your virtual environment using instructions printed from the command above
 pip install -r requirements.txt
-python3 scrape_flavoenzymes.py
+python scrape_flavoenzymes.py
 ```
 
 If somethign didn't work, follow these step by step instructions:
