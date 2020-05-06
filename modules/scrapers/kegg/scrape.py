@@ -100,7 +100,8 @@ def kegg_scrape(fetch_list):
     # If new ids have been found, fetch the data
     if len(fetch_list) > 0:
         log(f"Following potential flavins are missing from past results:", "info")
-        [log(f"\t{ec}", "info") for ec in fetch_list]
+        log(', '.join(fetch_list), "info")
+        # [log(f"\t{ec}", "info") for ec in fetch_list]
 
         # Scraping the data
         log(f"Scraping the data", "info")

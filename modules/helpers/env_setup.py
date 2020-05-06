@@ -9,8 +9,9 @@ import platform
 import subprocess
 import shutil
 
-VENV_DIR_NAME = "flav_env"
+from modules.helpers.logger import log
 
+VENV_DIR_NAME = 'flav_env'
 
 def execute_system_command(command, show_command=True, show_output=True):
     if show_command:
@@ -37,15 +38,9 @@ def print_instructions(venv_path):
         ps_path = Path(venv_path) / "Scripts/Activate.ps1"
         win_path = PureWindowsPath(win_path)
 
-        print(
-            f'➡︎ Now execute: "{win_path}"\nIf you are using powershell type this instead {ps_path}'
-        )
-        print(
-            f"If you get an error you might need to enable execution policy, follow this guide: https://docs.python.org/3/library/venv.html"
-        )
-        print(
-            f'To allow PowerShell to activate virtyal env run this: "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser"'
-        )
+        print(f'➡︎ Now execute: "{win_path}"\nIf you are using powershell type this instead {ps_path}')
+        print(f'If you get an error you might need to enable execution policy, follow this guide: https://docs.python.org/3/library/venv.html')
+        print(f'To allow PowerShell to activate virtual env run this: "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser"')
 
     # If posix
     if os.name == "posix":
@@ -53,8 +48,8 @@ def print_instructions(venv_path):
 
 
 def print_os_info():
-    print(f"OS: {os.name}")
-    print(f"Platform: {platform.system()}\t{platform.release()}")
+    log(f'OS: {os.name}','info')
+    log(f'Platform: {platform.system()}\t{platform.release()}','info')
 
 
 def create_venv(venv_path):
@@ -83,7 +78,7 @@ def confirm(venv_path):
 
 def delete_venv(venv_path):
     shutil.rmtree(venv_path)
-    print(f"Deleting {venv_path}")
+    log(f'Deleting {venv_path}','info')
 
 
 def check_for_virtual_env(venv_dir_name):
@@ -104,9 +99,9 @@ def check_for_virtual_env(venv_dir_name):
     # print(f'Checking {venv_path}')
     venv_path_exists = path.exists(venv_path)
     if venv_path_exists:
-        print(f"Virtual environment path does exist! 🎉")
+        log(f'Virtual environment path does exist! 🎉','success')
     else:
-        print(f"Virtual environment path does not exist! ❌")
+        log(f'Virtual environment path does not exist! ❌','warning')
 
     return venv_path_exists, venv_path
 
@@ -119,9 +114,7 @@ def main():
             delete_venv(venv_path)
             create_venv(venv_path)
         else:
-            print(
-                "virtual env not deleted. If you are experiencing issues, try deleting it."
-            )
+            log("virtual env not deleted. If you are experiencing issues, try deleting it.",'info')
     else:
         create_venv(venv_path)
 
