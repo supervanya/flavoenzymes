@@ -31,7 +31,7 @@ def print_instructions(venv_path):
     print('\n')
     
     # if Windows
-    if os.name == 'windows':
+    if os.name == 'nt':
         win_path = Path(venv_path) / "Scripts/activate.bat"
         win_path = PureWindowsPath(win_path)
 
