@@ -18,8 +18,7 @@ pip install -r requirements.txt
 python scrape_flavoenzymes.py
 ```
 
-If somethign didn't work, follow these step by step instructions:
-<details><summary>Step by step</summary>
+<details><summary>If you get stuck, follow these instructions:</summary>
 
 **Virtual environment setup**
 1. Create virtual environment.
@@ -39,11 +38,12 @@ Scraping all the data
 
 ```python scrape_flavoenzymes.py```
 
-Note:
+<details><summary>More information:</summary>
+
 - This will try to scrape all the information from all the websites that have been configured. 
 - If existing file is found in `./export/scraped_flavoenzymes.json` the programm will only update it if new entries will be found.
 - Inside the `modules/scrapers` you can find `blacklist.csv` and `whitelist.csv`. These files allow you to add some enzymes that should be always skipped or always fetched. Try using this approach before harcoding something in the code.
-
+</details>
 
 
 ---
