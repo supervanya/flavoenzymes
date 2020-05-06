@@ -1,6 +1,7 @@
 import zeep
 import json
 import hashlib
+from pathlib import Path
 
 # from zeep import Client
 
@@ -8,6 +9,7 @@ from modules.helpers import cache
 from modules.helpers.logger import log
 from modules.helpers.logger import should_log
 from modules.helpers.progress_bar import print_percent_done
+from modules.helpers.export import export_results
 
 email = "si485@dispostable.com"
 password = "si485@dispostable"
@@ -77,7 +79,7 @@ def getSubstrate(ecNumber):
         "ligandStructureId*",
     )
     resp = brendaSOAP(parameters, "getSubstrate")
-    return sorted({substrate["substrate"] for substrate in resp})
+    return sorted({substrate["substrate"] for substrate in resp if substrate != "more"})
 
 
 def getProduct(ecNumber):
@@ -91,7 +93,7 @@ def getProduct(ecNumber):
         "ligandStructureId*",
     )
     resp = brendaSOAP(parameters, "getProduct")
-    return sorted({product["product"] for product in resp})
+    return sorted({product["product"] for product in resp if product != "?"})
 
 
 def getPdb(ecNumber):
@@ -135,7 +137,8 @@ def get_all_data(fetch_list):
         try:
             # getting the data for ec number
             entry = create_brenda_ec_entry(ec)
-            data_dict[ec] = entry
+            id = "ec:" + ec
+            data_dict[id] = entry
         except Exception as e:
             log(f"couldn't scrape info for {ec}", "warning")
             log(f"Error: {e}", "debug")
@@ -152,13 +155,16 @@ def get_all_data(fetch_list):
 
 def brenda_scrape(fetch_list):
     if len(fetch_list) > 0:
-        return get_all_data(fetch_list)
+        new_data = get_all_data(fetch_list)
+
+        # Writing out the results to the file
+        export_results(new_data, path="export/brenda.json")
+
+        # returning new data
+        return new_data
     else:
         log(
             "Doesn't look like there are any new flavins to fetch from Brenda!",
             "success",
         )
-
-    # Writing out the results to the file
-    # with open(export_file, 'w') as outfile:
-    #     json.dump(new_db, outfile)
+        return {}

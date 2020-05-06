@@ -4,6 +4,7 @@ import bioservices
 from modules.helpers.logger import log
 from modules.helpers.logger import should_log
 from modules.helpers.progress_bar import print_percent_done
+from modules.helpers.export import export_results
 from modules.helpers import cache
 
 parser = bioservices.kegg.KEGGParser()
@@ -80,10 +81,10 @@ def get_all_data(fetch_list):
 
         ec_data["KEGG_ID"] = id
         ec_data["EC_NUMBER"] = ec_number
-        data_dict[ec_number] = ec_data
+        data_dict[id] = ec_data
 
         log(f"Scraping data for - {ec_number}", "debug")
-        log(f"Getting following data - {data_dict[ec_number]}", "silly")
+        log(f"Getting following data - {data_dict[id]}", "silly")
         # progress bar
         print_percent_done(
             index=index, total=len(fetch_list), title="Scraping Kegg, please wait..."
@@ -103,14 +104,13 @@ def kegg_scrape(fetch_list):
         # Scraping the data
         log(f"Scraping the data", "info")
         flavins = get_all_data(fetch_list)
-
         log(f"Successfully scraped {len(fetch_list)} enzymes from Kegg", "success")
-        return flavins
 
         # Writing out the results to the file
-        # with open(export_file, 'w') as outfile:
-        #     json.dump(flavins, outfile)
+        export_results(flavins, "export/kegg.json")
+        return flavins
     else:
         log(
             "Doesn't look like there are any new flavins to fetch from KEGG!", "success"
         )
+        return {}

@@ -1,4 +1,4 @@
-CSVGEN_INPUT=export/combined.json
+CSVGEN_INPUT=export/scraped_flavoenzymes.json
 CSV_FILE=export/flavoenzymes_to_sort.csv
 
 
