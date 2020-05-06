@@ -36,9 +36,10 @@ If somethign didn't work, follow these step by step instructions:
 
 ## Run the pipeline
 Scraping all the data
-  > This will try to scrape all the information from all the websites that have been configured. 
-If existing file will be found in `./export/scraped_flavoenzymes.json` the programm will only update it if new entries will be found. (it will also make a backup of the existing file and save it with current date in filename) 
-  - `python scrape_flavoenzymes.py`
+`python scrape_flavoenzymes.py`
+  > - This will try to scrape all the information from all the websites that have been configured. 
+  > - If existing file is found in `./export/scraped_flavoenzymes.json` the programm will only update it if new entries will be found.
+  > - Inside the `modules/scrapers` you can find `blacklist.csv` and `whitelist.csv`. These files allow you to add some enzymes that should be always skipped or always fetched. Try using this approach before harcoding something in the code.
 
 
 
